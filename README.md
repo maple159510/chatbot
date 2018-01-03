@@ -1,10 +1,11 @@
 # TOC Project 2017
-
+This is the Go-bot that user can learn about Go by answering some simple questions.
+![](https://i.imgur.com/3MNJuxQ.jpg)
 ### Prerequisite
 * Python 3
 
 ## Finite State Machine
-![fsm](./img/show-fsm.png)
+![fsm](https://i.imgur.com/EMX4xif.png)
 
 ## Usage
 The initial state is set to `user`.
