@@ -6,9 +6,12 @@ from flask import Flask, request, send_file
 
 from fsm import TocMachine
 
+from transitions import State
 
-API_TOKEN = 'Your Telegram API Token'
-WEBHOOK_URL = 'Your Webhook URL'
+from transitions.extensions import GraphMachine as Machine
+
+API_TOKEN = '519466420:AAEqkUKvoHwqHCAcmSVN6zQmRk-TY4YPid0'
+WEBHOOK_URL = 'https://1e264d11.ngrok.io/hook'
 
 app = Flask(__name__)
 bot = telegram.Bot(token=API_TOKEN)
@@ -16,7 +19,9 @@ machine = TocMachine(
     states=[
         'user',
         'state1',
-        'state2'
+        'state2',
+        'state3',
+        'state4'
     ],
     transitions=[
         {
@@ -32,10 +37,24 @@ machine = TocMachine(
             'conditions': 'is_going_to_state2'
         },
         {
+            'trigger': 'advance',
+            'source': 'user',
+            'dest': 'state3',
+            'conditions': 'is_going_to_state3'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'user',
+            'dest': 'state4',
+            'conditions': 'is_going_to_state4'
+        },
+        {
             'trigger': 'go_back',
             'source': [
                 'state1',
-                'state2'
+                'state2',
+                'state3',
+                'state4'
             ],
             'dest': 'user'
         }
@@ -58,6 +77,7 @@ def _set_webhook():
 @app.route('/hook', methods=['POST'])
 def webhook_handler():
     update = telegram.Update.de_json(request.get_json(force=True), bot)
+    print(update.message.text)
     machine.advance(update)
     return 'ok'
 
@@ -72,4 +92,5 @@ def show_fsm():
 
 if __name__ == "__main__":
     _set_webhook()
-    app.run()
+    app.run(port = 5000)
+    machine.graph.draw('fsm.png',prog = 'dot')
