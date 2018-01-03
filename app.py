@@ -11,7 +11,7 @@ from transitions import State
 from transitions.extensions import GraphMachine as Machine
 
 API_TOKEN = '519466420:AAEqkUKvoHwqHCAcmSVN6zQmRk-TY4YPid0'
-WEBHOOK_URL = 'https://1e264d11.ngrok.io/hook'
+WEBHOOK_URL = 'https://f9fcd1c9.ngrok.io/hook'
 
 app = Flask(__name__)
 bot = telegram.Bot(token=API_TOKEN)
@@ -78,6 +78,8 @@ def _set_webhook():
 def webhook_handler():
     update = telegram.Update.de_json(request.get_json(force=True), bot)
     print(update.message.text)
+    if update.message.text != '':
+        update.message.reply_text('Hello!\nThis is the Go-bot.\nIf you want to answer a question about Basic Problem--SET, please type "play a".\nIf you want to answer a question about Technical Problem--EAT, please type "play b".\nIf you want to answer a question about Technical Problem--BROKE EYE, please type "play c".\nIf you want to answer a question about Advanced Problem--DEATH LIVE, please type "play d".\n')
     machine.advance(update)
     return 'ok'
 
@@ -92,5 +94,5 @@ def show_fsm():
 
 if __name__ == "__main__":
     _set_webhook()
-    app.run(port = 5000)
+    app.run()
     machine.graph.draw('fsm.png',prog = 'dot')
