@@ -10,8 +10,6 @@ This is the Go-bot that user can learn about Go by answering some simple questio
 ## Usage
 The initial state is set to `user`.
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
-
 * user
 	* Input: "play a"
 		* Reply: the corresponding question "Basic Problem--SET"
