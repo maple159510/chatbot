@@ -38,3 +38,5 @@ The initial state is set to `user`.
 		* When user's answer is wrong, it would reply 'wrong'
 		* User can type 'answer' to get the official answer with a picture to explain it.
 		* User can type 'back' to get back to the initial state.
+## Feedback
+There are still many things that hasn't been implemented and accomplished, so it's not a good bot to use.
